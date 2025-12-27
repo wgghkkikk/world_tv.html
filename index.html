@@ -1,1 +1,52 @@
-
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تيك توك المملكة - عالم وناس</title>
+    <style>
+        body { margin: 0; background: #000; color: white; overflow: hidden; font-family: sans-serif; }
+        #feed { height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; }
+        .post { height: 100vh; scroll-snap-align: start; position: relative; border-bottom: 2px solid #111; }
+        video { width: 100%; height: 100%; object-fit: cover; }
+        .ui-right { position: absolute; right: 15px; bottom: 150px; text-align: center; z-index: 10; }
+        .ui-left { position: absolute; bottom: 50px; left: 20px; z-index: 10; text-shadow: 2px 2px 5px #000; }
+        .icon { font-size: 45px; margin-bottom: 25px; cursor: pointer; filter: drop-shadow(0 0 5px black); }
+    </style>
+</head>
+<body>
+<div id="feed"></div>
+<script>
+    const videos = [
+        { s: "https://v1.assets.tumblr.com/tumblr_p9v5r4rW1G1x8r3wyo1.mp4", u: "خادم_الحسين", d: "🏴 مقاطع حسينية ودينية - مملكة علوش" },
+        { s: "https://v1.assets.tumblr.com/tumblr_p1kjs9W4Xf1wreoyvo1.mp4", u: "عاشق_بغداد", d: "🇮🇶 أجواء المملكة والناس الحقيقية" },
+        { s: "https://assets.mixkit.co/videos/preview/mixkit-busy-street-in-a-modern-city-at-night-4101-large.mp4", u: "عالم_الترند", d: "✨ عالم ومنوعات حقيقية" },
+        { s: "https://www.w3schools.com/html/movie.mp4", u: "علوش_الإمبراطور", d: "👑 ملك البرمجة - ميزة 70" }
+    ];
+    const feed = document.getElementById('feed');
+    function createPosts() {
+        for (let i = 0; i < 50; i++) {
+            const v = videos[Math.floor(Math.random() * videos.length)];
+            const div = document.createElement('div');
+            div.className = 'post';
+            div.innerHTML = `
+                <video loop playsinline muted autoplay src="${v.s}?v=${Math.random()}"></video>
+                <div class="ui-right">
+                    <div class="icon" onclick="this.style.color='red'">❤️</div>
+                    <p style="font-weight:bold;">${Math.floor(Math.random()*999)}K</p>
+                    <div class="icon">💬</div>
+                </div>
+                <div class="ui-left">
+                    <h2 style="color:gold; margin:0;">@${v.u}</h2>
+                    <p style="margin:10px 0; font-size:18px; font-weight:bold;">${v.d}</p>
+                </div>`;
+            feed.appendChild(div);
+        }
+    }
+    createPosts();
+    document.addEventListener('click', () => {
+        document.querySelectorAll('video').forEach(v => v.play());
+    }, {once: true});
+</script>
+</body>
+</html>
